@@ -4,9 +4,9 @@ A machine-learning decision-support app (Streamlit) that helps an adult decide w
 
 > **Educational project — not for clinical use.** The model predicts a *survey label*, not a diagnosis.
 
-- **Live app:** `<paste Streamlit Community Cloud link>`
-- **Demo video (3 min):** `<paste link>`
-- **Team / course:** `<names, course, date>`
+- **Live app:** Add the Streamlit Community Cloud URL after deployment.
+- **Demo video:** Add the project demo link when available.
+- **Team / course:** Add team members and course details.
 
 ## 1. Problem and user-decision statement
 
@@ -14,7 +14,7 @@ Diabetes and prediabetes often go undetected, and access to testing is uneven. E
 
 **User-decision statement:** *An adult answering health-related questions at home uses the application to assess their likelihood of reporting diabetes or prediabetes and decide whether to seek a blood glucose test.*
 
-The app answers with a score, a flag/no-flag recommendation, the answers that moved the score, and a concrete next step. It never says "you have diabetes" or "you are healthy".
+The app presents an educational model score, explains the decision threshold and approximate model behaviour, and suggests discussing appropriate testing with a healthcare professional. It does not diagnose diabetes or confirm that someone is healthy.
 
 ## 2. Data
 
@@ -77,19 +77,31 @@ streamlit run app.py
 
 `train.py --keep-duplicates` and `--cost-fn 8` reproduce the sensitivity checks in `DECISION_LOG.md`.
 
-## 7. Repository
+## 7. App pages
+
+- **Overview (`app.py`):** project introduction, dataset snapshot, model performance, and navigation guidance.
+- **Screening Assistant:** seven-question educational screening flow with a model result and explanation.
+- **Threshold & Cost:** explore threshold choices and assumed false-negative / false-positive cost trade-offs.
+- **Health Equity:** compare model performance across income and education groups.
+- **Guided Health Assistant:** fixed, safety-reviewed educational topics; not an unrestricted medical chatbot.
+- **About the Model:** data, modelling process, evaluation, limitations, and reproducibility.
+
+## 8. Repository structure
 
 ```
-app.py                      Page 1: Risk Screening + explanation
-pages/1_Threshold_and_Cost.py   Threshold & cost simulator
-pages/2_Health_Equity.py        Subgroup performance with confidence intervals
-pages/3_About_Model.py          Data, models, metrics, limitations
-core.py  utils.py           Shared logic (no Streamlit in core.py)
-train.py                    Rebuilds everything from raw data
-models/                     pipeline.joblib, model_meta.json
-reports/                    comparison, fairness, importance tables, test scores
-data/                       raw CSV + sample_input.csv
-notebooks/exploratory_analysis.ipynb
+app.py                          Overview dashboard (landing page)
+pages/1_Screening_Assistant.py  Seven-question screening experience
+pages/2_Threshold_and_Cost.py   Threshold & cost simulator
+pages/3_Health_Equity.py        Subgroup performance and confidence intervals
+pages/4_Guided_Health_Assistant.py  Guided health education
+pages/5_About_Model.py          Data, models, metrics, limitations
+core.py                         Shared ML logic (no Streamlit UI)
+utils.py                        Shared UI theme and loading helpers
+train.py                        Rebuilds models and reports from data
+models/                         Saved pipeline and model metadata
+reports/                        Evaluation and fairness reports
+data/                           Dataset and sample input
+notebooks/                      Exploratory analysis
 DECISION_LOG.md  AI_USE_APPENDIX.md
 ```
 
